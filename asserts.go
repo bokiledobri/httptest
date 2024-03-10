@@ -16,7 +16,7 @@ func Assert(t testing.TB, statement bool, message string, msgArgs ...any) {
 //AssertErrNotNil fails test with err.Error print if err is not nil
 func AssertErrNotNil(t testing.TB, err error) {
 	t.Helper()
-	Assert(t, err != nil, "expected error to be nil, got:\n %s", err.Error())
+	Assert(t, err != nil, "expected error to be nil, got:\n %v", err)
 }
 //AssertBody ails the test if body of resp  does not contain want
 func AssertBody(t testing.TB, resp *http.Response, want string) {
