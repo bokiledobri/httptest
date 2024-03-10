@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-//Assert  calls t.Errorf with message and msgArgs aas parameters if statement is false
+//Assert  calls t.Errorf with message and msgArgs as parameters if statement is false
 func Assert(t testing.TB, statement bool, message string, msgArgs ...any) {
 	if !statement {
 		t.Errorf(message, msgArgs...)
@@ -18,7 +18,7 @@ func AssertErrNotNil(t testing.TB, err error) {
 	t.Helper()
 	Assert(t, err == nil, "expected error to be nil, got:\n %v", err)
 }
-//AssertBody ails the test if body of resp  does not contain want
+//AssertBody fails test if body of resp  does not contain want
 func AssertBody(t testing.TB, resp *http.Response, want string) {
 	t.Helper()
 	body, err := io.ReadAll(resp.Body)
@@ -26,13 +26,13 @@ func AssertBody(t testing.TB, resp *http.Response, want string) {
 	Assert(t, strings.Contains(string(body), want), "expected request body to contain %s, got: \n %s", want, body)
 }
 
-//AssertStatus fails the test if status code of resp is not equal to want
+//AssertStatus fails test if status code of resp is not equal to want
 func AssertStatus(t testing.TB, resp *http.Response, want int) {
 	t.Helper()
 	s := resp.StatusCode
 	Assert(t, want == s, "expected status of %d, got %d", want, s)
 }
-//AssertCookieExists fails the test if cookie with given name does/does not exist depending on exists parameter
+//AssertCookieExists fails test if cookie with given name does/does not exist depending on exists parameter
 func AssertCookieExists(t testing.TB, resp *http.Response, name string, exists bool) {
     _, e := getCookieValue(resp, "jwt")
 	if exists {
