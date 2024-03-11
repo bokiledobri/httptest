@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-//TestData are common fields for http request and expected values
+// TestData are common fields for http request and expected values
 type TestData struct {
 	Request            interface{}
 	Route              string
@@ -16,19 +16,23 @@ type TestData struct {
 	ExpectedCookie     bool
 	Description        string
 	Headers            map[string]string
-    ErrNil bool
+	ErrNil             bool
+	Method             string
 }
 
-//SetupRequest creates *http.Request with provided fields in TestData
+// SetupRequest creates *http.Request with provided fields in TestData
 func (test *TestData) SetupRequest() (*http.Request, error) {
-	req, err := http.NewRequest(http.MethodPost, test.Route, parseToJSON(test.Request))
+	if test.Method == "" {
+		test.Method = http.MethodPost
+	}
+	req, err := http.NewRequest(test.Method, test.Route, parseToJSON(test.Request))
 	for k, v := range test.Headers {
 		req.Header.Add(k, v)
 	}
 	return req, err
 }
 
-//Run takes *http.Response and possible error and asserts error, cookie, status and body with TestData expected fields
+// Run takes *http.Response and possible error and asserts error, cookie, status and body with TestData expected fields
 func (test *TestData) Run(t *testing.T, res *http.Response, err error) {
 	t.Helper()
 
